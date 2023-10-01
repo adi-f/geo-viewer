@@ -1,6 +1,5 @@
 package adif.geoviewer.processor;
 
-import java.beans.XMLEncoder;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
