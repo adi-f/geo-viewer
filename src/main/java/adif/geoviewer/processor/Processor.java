@@ -9,19 +9,19 @@ import java.util.List;
 import adif.geoviewer.processor.gpxmodel.Gpx;
 import adif.geoviewer.processor.model.ImageFile;
 import adif.geoviewer.processor.model.ImageFiles;
+import adif.geoviewer.processor.model.Parameters;
 
 public class Processor {
     ImageTagReader imageTagReader = new ImageTagReader();
     Writer writer = new Writer();
 
-    public void process(String pathsSeparatedByFileSeparator, String outputGpxFile) {
-        ImageFiles imageFiles = read(pathsSeparatedByFileSeparator, outputGpxFile);
+    public void process(Parameters parameters) {
+        ImageFiles imageFiles = read(parameters.getPathsSeparatedByFileSeparator());
         log(imageFiles);
-        write(imageFiles, outputGpxFile);
-
+        write(imageFiles, parameters.getOutputGpxFile());
     }
 
-    private ImageFiles read(String pathsSeparatedByFileSeparator, String outputGpxFile) {
+    private ImageFiles read(String pathsSeparatedByFileSeparator) {
 
         FileIterator fileIterator = FileIterator.createJpegIteratorForPaths(pathsSeparatedByFileSeparator);
 

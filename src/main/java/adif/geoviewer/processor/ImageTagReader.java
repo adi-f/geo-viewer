@@ -1,13 +1,8 @@
 package adif.geoviewer.processor;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.ResolverStyle;
-import java.util.Date;
 
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.ImageMetadata;

@@ -1,7 +1,6 @@
 package adif.geoviewer.processor.gpxmodel;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import adif.geoviewer.processor.model.ImageFiles;

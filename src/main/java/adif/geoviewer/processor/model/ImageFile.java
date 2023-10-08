@@ -1,12 +1,10 @@
 package adif.geoviewer.processor.model;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 import lombok.Builder;
-import lombok.Value;
 import lombok.Builder.Default;
+import lombok.Value;
 
 @Value
 @Builder
