@@ -24,7 +24,10 @@ public class Startup {
         .port(8089)
         .staticResourceDir("dist")
         .build();
-        ui.setServerControl(() -> webServer.start(), () -> webServer.stop());
+        ui.setServerControl(() -> {
+            webServer.setGpxFile(ui.getServeFile());
+            webServer.start();
+        }, () -> webServer.stop());
     }
 
     void processImages(Parameters parameters) {

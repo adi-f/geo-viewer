@@ -138,6 +138,10 @@ public class SwingUi {
         stopServer.addActionListener(event -> stop.run());
     }
 
+    public String getServeFile() {
+        return serveFileField.getText();
+    }
+
     private ActionListener openOutputFileChooser(JFileChooser outputFileChooser) {
         return event -> {
             int result = outputFileChooser.showSaveDialog(frame);
