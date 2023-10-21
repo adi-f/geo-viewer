@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "private": "true",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack --mode production"
   },
   "devDependencies": {
     "html-webpack-plugin": "^5.5.3",
+    "ts-loader": "^9.5.0",
+    "typescript": "^5.2.2",
     "webpack": "^5.89.0",
     "webpack-cli": "^5.1.4"
   }
