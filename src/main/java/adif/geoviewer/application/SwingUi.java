@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
@@ -25,12 +26,15 @@ public class SwingUi {
     private JFrame frame;
     private JTextField inputPathsField;
     private JTextField outputField;
+    private JTextField serveFileField;
     private JButton runButton;
     private JButton abortButton;
-
+    
     private JProgressBar progressBar;
-
     private int progressPercent = 0;
+
+    private JButton startServer;
+    private JButton stopServer;
 
     public SwingUi () {
         create();
@@ -89,13 +93,28 @@ public class SwingUi {
         abortButton = new JButton("Abort");
         buttonPanel.add(abortButton);
 
+        // server
+        frame.add(new JSeparator());
+
+        JPanel serverPanel = new JPanel();
+        setFlowlayoutAlignement(serverPanel, FlowLayout.LEFT);
+        frame.add(serverPanel);
+
+        serverPanel.add(new JLabel("Serve GPX: "));
+        serveFileField = new JTextField(30);
+        serverPanel.add(serveFileField);
+        startServer = new JButton("Start Server");
+        stopServer = new JButton("Stop Server");
+
+        serverPanel.add(stopServer);
+        serverPanel.add(startServer);
     }
 
-    void show() {
+    public void show() {
         frame.setVisible(true);
     }
 
-    void setProgress(int currentCount, int maxCount) {
+    public void setProgress(int currentCount, int maxCount) {
         int newProgressPercent = currentCount * 100 / maxCount;
         if(progressPercent != newProgressPercent) {
             progressPercent = newProgressPercent;
@@ -103,15 +122,20 @@ public class SwingUi {
         }
     }
 
-    void setOnRunListener(Consumer<Parameters> onRunListener) {
+    public void setOnRunListener(Consumer<Parameters> onRunListener) {
         runButton.addActionListener(event -> onRunListener.accept(Parameters.builder()
             .pathsSeparatedByFileSeparator(inputPathsField.getText())
             .outputGpxFile(outputField.getText())
             .build()));
     }
 
-    void setOnAbortListener(Runnable onAbortListener) {
+    public void setOnAbortListener(Runnable onAbortListener) {
         abortButton.addActionListener(event -> onAbortListener.run());
+    }
+
+    public void setServerControl(Runnable start, Runnable stop) {
+        startServer.addActionListener(event -> start.run());
+        stopServer.addActionListener(event -> stop.run());
     }
 
     private ActionListener openOutputFileChooser(JFileChooser outputFileChooser) {
@@ -123,6 +147,7 @@ public class SwingUi {
                     resultFile += ".gpx";
                 }
                 outputField.setText(resultFile);
+                serveFileField.setText(resultFile);
             }
         };
     }

@@ -3,6 +3,7 @@ package adif.geoviewer.application;
 import adif.geoviewer.processor.Processor;
 import adif.geoviewer.processor.Processor.AbortCallback;
 import adif.geoviewer.processor.model.Parameters;
+import adif.geoviewer.server.WebServer;
 
 public class Startup {
 
@@ -14,7 +15,16 @@ public class Startup {
     void run() {
         ui = new SwingUi();
         ui.setOnRunListener(this::processImages);
+        setupServer();
         ui.show();
+    }
+
+    private void setupServer() {
+        WebServer webServer = WebServer.builder()
+        .port(8089)
+        .staticResourceDir("dist")
+        .build();
+        ui.setServerControl(() -> webServer.start(), () -> webServer.stop());
     }
 
     void processImages(Parameters parameters) {
