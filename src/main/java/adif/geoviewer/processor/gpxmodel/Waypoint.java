@@ -23,7 +23,7 @@ public class Waypoint {
 
     public static Waypoint from(ImageFile imageFile) {
         return Waypoint.builder()
-            .lat(Double.toString(imageFile.getLongitude()))
+            .lat(Double.toString(imageFile.getLatitude()))
             .lon(Double.toString(imageFile.getLongitude()))
             .time(String.valueOf(imageFile.getTimestamp()))
             .name(imageFile.getName())

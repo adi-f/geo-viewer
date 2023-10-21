@@ -9,7 +9,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -24,6 +26,11 @@ public class SwingUi {
     private JTextField inputPathsField;
     private JTextField outputField;
     private JButton runButton;
+    private JButton abortButton;
+
+    private JProgressBar progressBar;
+
+    private int progressPercent = 0;
 
     public SwingUi () {
         create();
@@ -62,7 +69,16 @@ public class SwingUi {
         outputFileChooser.setFileFilter(new FileNameExtensionFilter("GPX files (.gpx)", "gpx"));
         outputFileChooserBtn.addActionListener(openOutputFileChooser(outputFileChooser));
 
-        // button
+        // progress bar
+        JPanel progressPanel = new JPanel();
+        setFlowlayoutAlignement(progressPanel, FlowLayout.LEFT);
+        progressBar = new JProgressBar(0, 100);
+        progressBar.setStringPainted(true);
+        progressBar.setValue(0);
+        progressPanel.add(progressBar);
+        frame.add(progressPanel);
+
+        // buttons
         JPanel buttonPanel = new JPanel();
         setFlowlayoutAlignement(buttonPanel, FlowLayout.RIGHT);
         frame.add(buttonPanel);
@@ -70,10 +86,21 @@ public class SwingUi {
         runButton = new JButton("Run");
         buttonPanel.add(runButton);
 
+        abortButton = new JButton("Abort");
+        buttonPanel.add(abortButton);
+
     }
 
     void show() {
         frame.setVisible(true);
+    }
+
+    void setProgress(int currentCount, int maxCount) {
+        int newProgressPercent = currentCount * 100 / maxCount;
+        if(progressPercent != newProgressPercent) {
+            progressPercent = newProgressPercent;
+            SwingUtilities.invokeLater(() -> progressBar.setValue(newProgressPercent));
+        }
     }
 
     void setOnRunListener(Consumer<Parameters> onRunListener) {
@@ -83,11 +110,19 @@ public class SwingUi {
             .build()));
     }
 
+    void setOnAbortListener(Runnable onAbortListener) {
+        abortButton.addActionListener(event -> onAbortListener.run());
+    }
+
     private ActionListener openOutputFileChooser(JFileChooser outputFileChooser) {
         return event -> {
             int result = outputFileChooser.showSaveDialog(frame);
             if(result == JFileChooser.APPROVE_OPTION) {
-                outputField.setText(outputFileChooser.getSelectedFile().getAbsolutePath());
+                String resultFile = outputFileChooser.getSelectedFile().getAbsolutePath();
+                if(!resultFile.toLowerCase().endsWith(".gpx")) {
+                    resultFile += ".gpx";
+                }
+                outputField.setText(resultFile);
             }
         };
     }

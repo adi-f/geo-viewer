@@ -16,7 +16,7 @@ public class FileIterator implements Iterable<File>{
     private final List<File> directories;
 
     public static FileIterator createJpegIteratorForPaths(String pathsSeparatedByFileSeparator) {
-        Predicate<File> filter = file -> {
+        Predicate<File> jpgFilter = file -> {
             if(!file.isFile()) {
                 return false;
             }
@@ -30,7 +30,7 @@ public class FileIterator implements Iterable<File>{
         .map(File::new)
         .collect(Collectors.toUnmodifiableList());
 
-        return new FileIterator(filter, directories);
+        return new FileIterator(jpgFilter, directories);
     }
 
     @Override

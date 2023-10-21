@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import adif.geoviewer.processor.model.ImageFiles;
+import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
@@ -16,10 +17,14 @@ import lombok.NoArgsConstructor;
 @XmlRootElement(namespace = Gpx.GPX_NAMESPACE)
 public class Gpx {
     static final String GPX_NAMESPACE = "http://www.topografix.com/GPX/1/1";
+
+    @XmlAttribute
+    private final String version = "1.1";
+
     @XmlElement(namespace = GPX_NAMESPACE)
     private Metadata metadata;
 
-    @XmlElement(name = "wtp", namespace = GPX_NAMESPACE)
+    @XmlElement(name = "wpt", namespace = GPX_NAMESPACE)
     private List<Waypoint> waypoints;
 
     public static Gpx from(ImageFiles imageFiles) {
