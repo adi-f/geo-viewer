@@ -3,3 +3,9 @@
     width: 100%;
     height: 90%;
 }
+
+.cicon {
+    display: inline-block;
+    border: 3px solid darkred;
+    border-radius: 8px;
+}

@@ -23,5 +23,8 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: 'src/main/js/index.html'
         })
-    ]
+    ],
+    performance: {
+        hints: false
+    }
 };

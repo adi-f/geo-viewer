@@ -1,8 +1,5 @@
-export interface Waypoint {
-    lat: number;
-    lon: number;
-    name: string;
-}
+import { Waypoint } from "../model/model";
+
 
 export async function readWaypoints(): Promise<Waypoint[]> {
     const gpx = await redGpx();
