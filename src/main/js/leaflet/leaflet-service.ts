@@ -15,8 +15,17 @@ export function initMap() {
 }
 
 export function setWaypoints(waypoints: Waypoint[]){
-    const markers: L.Marker[] = waypoints.map(waypoint => L.marker([waypoint.lat, waypoint.lon], {icon: circleIcon}).bindPopup(waypoint.name));
+    const markers: L.Marker[] = waypoints.map(waypoint => L.marker([waypoint.lat, waypoint.lon], {icon: circleIcon}).bindPopup(sanitizeHtml(waypoint.name + '<b>&gt;</b>')));
     const group = L.featureGroup(markers);
     map.fitBounds(group.getBounds());
     group.addTo(map);
+}
+
+function sanitizeHtml (text: string): string {
+    // beware of home made security ;-)
+    return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+
 }
